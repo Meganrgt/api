@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Port de plaisance Russel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+   <%- include('layouts/header'); -%>
+   <a href='http://localhost:8000/add-reservation' type="button" class="btn btn-success m-3">Ajouter une réservation</a>
+    <main class="text-center mb-5">
+        <h1>Liste des réservations</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Numéro du catway réservé</th>
+                    <th>Client</th>
+                    <th>Bateau</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% reservations.forEach((reservation, index) => {%>
+                    <tr>
+                        <td><%= reservation.catwayNumber %></td>
+                        <td><%= reservation.clientName %></td>
+                        <td><%= reservation.boatName %></td>
+                        <td><%= new Date(reservation.startDate).toLocaleDateString('fr-FR') %></td>
+                        <td><%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %></td>
+                        <td>
+                            <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" data-bs-target="#exampleModal<%= reservation._id %>">
+                            Modifier
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal<%= reservation._id %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= reservation._id %>" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel<%= reservation._id %>">Modifier la réservation du client<%= reservation.clientName %></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/catways/<%= reservation.catwayNumber %>/reservations/<%= reservation._id %>/update" method="post" id="update-user">
+                                        <div class="form-floating mb-3 col-4 mx-auto">
+                                            <input type="number" class="form-control" id="catwayNumber" name="catwayNumber" value="<%= reservation.catwayNumber %>" placeholder="name">
+                                            <label for="catwayNumber">Numéro de catway</label>
+                                        </div>
+                                        <div class="form-floating mb-3 col-4 mx-auto">
+                                            <input type="text" class="form-control" id="clientName" name="clientName" value="<%= reservation.clientName %>" placeholder="nom client">
+                                            <label for="clientName">Nom client</label>
+                                        </div>
+                                        <div class="form-floating mb-3 col-4 mx-auto">
+                                            <input type="text" class="form-control" id="boatName" name="boatName" value="<%= reservation.boatName %>" placeholder="nom bateau">
+                                            <label for="boatName">Nom du bateau</label>
+                                        </div>
+                                        <div class="form-floating mb-3 col-4 mx-auto">
+                                            <input type="date" class="form-control" id="startDate" name="startDate" value="<%= reservation.startDate %>" placeholder="date début">
+                                            <label for="startDate">Date de début</label>
+                                        </div>
+                                        <div class="form-floating mb-3 col-4 mx-auto">
+                                            <input type="date" class="form-control" id="endDate" name="endDate" value="<%= new Date(reservation.endDate).toLocaleDateString('fr-FR') %>" placeholder="date fin">
+                                            <label for="endDate">Date de début</label>
+                                        </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                            <form action='/catways/<%= reservation.catwayNumber %>/reservations/<%= reservation._id %>/delete' method="post" id="delete-user">
+                                <div class="col-12">
+                                    <button class="btn btn-danger my-1" type="submit" name="delete" >Supprimer</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+            </table>
+    </main>
+    <%- include('layouts/footer'); -%>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>    
+</body>
+</html>

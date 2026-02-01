@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Port de plaisance Russel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <%- include('layouts/header'); -%>
+   <a href='http://localhost:8000/add-catway' type="button" class="btn btn-success m-3">Ajouter un catway</a>
+    <main class="text-center mb-5">
+        <h1>Liste des catways</h1>
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Type</th>
+                <th>Etat</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% catways.forEach((catway, index) => {%>
+                <tr>
+                    <td><%= catway.catwayNumber %></td>
+                    <td><%= catway.catwayType %></td>
+                    <td><%= catway.catwayState %></td>
+                    <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal" data-bs-target="#exampleModal<%= catway.catwayNumber %>">
+                                Modifier
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal<%= catway.catwayNumber %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= catway.catwayNumber %>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel<%= catway.catwayNumber %>">Modifier l'état du catway n° <%= catway.catwayNumber %></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/catways/<%= catway.catwayNumber %>/update" method="post" id="update-catway">
+                                            <div class="form-floating mb-3 col-12 mx-auto">
+                                                <input type="text" class="form-control" id="catwayState" name="catwayState" value="<%= catway.catwayState %>" placeholder="catwayState">
+                                                <label for="catwayState">Etat</label>
+                                            </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Btn Delete -->
+                        <form action='/catways/<%= catway.catwayNumber%>/delete' method="post" id="delete-catway">
+                            <div class="col-12">
+                                <button class="btn btn-danger my-1" type="submit" name="delete" >Supprimer</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+        </table>
+    </main>
+    <%- include('layouts/footer'); -%>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>    
+</body>
+</html>
