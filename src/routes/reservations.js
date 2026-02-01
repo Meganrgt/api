@@ -20,5 +20,4 @@ router.put('/:id/reservations/:idReservation', service.update);
 /* Supprime une réservation*/
 router.delete('/:id/reservations/:idReservation', service.delete);
 
-
 module.exports = router;

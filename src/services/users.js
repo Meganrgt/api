@@ -1,6 +1,5 @@
 const User = require('../models/user');
 
-
 /* GET LA LISTE DES USERS*/
 exports.getAll = async(req, res, next) => {
 

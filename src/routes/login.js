@@ -5,5 +5,4 @@ const service = require('../services/login');
 
 router.post('/', service.authenticate);
 
-
 module.exports = router;

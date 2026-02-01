@@ -17,5 +17,4 @@ router.put('/:id', service.update);
 /* Supprime un catway*/
 router.delete('/:id', service.delete);
 
-
 module.exports = router;

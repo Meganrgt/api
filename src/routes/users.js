@@ -17,5 +17,4 @@ router.put('/:email', service.update);
 /* Supprime un utilisateur*/
 router.delete('/:email', service.delete);
 
-
 module.exports = router;

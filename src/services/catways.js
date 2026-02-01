@@ -1,6 +1,5 @@
 const Catway = require('../models/catway');
 
-
 /* GET LA LISTE DES CATWAYS*/
 exports.getAll = async(req, res, next) => {
 
